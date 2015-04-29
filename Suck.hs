@@ -3,7 +3,7 @@
 - Sokal text generator
 - suck.hs
 -}
-module Main where
+module Suck (runSuck) where
 
 import Prelude hiding (map,filter)
 import Network.HTTP
@@ -18,11 +18,12 @@ type PrimitiveModel = Map (String,String) [String]
 
 type ProcessedModel = [(String, [(Int,Int)])]
 
-main :: IO ()
-main = do
+runSuck :: IO ()
+runSuck = do
     contents <- readFile "urls.txt"
     putStrLn "Successfully read in url file"
     let ls = lines contents
+    putStrLn $ head ls
     putStrLn "Connecting to servers and downloading content..."
     responses <- mapM grabResp ls
     putStrLn "Parsing in DOM..."
