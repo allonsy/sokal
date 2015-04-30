@@ -2,6 +2,7 @@
 - lab 1
 - Sokal text generator
 - suck.hs
+- See README.md for instructions and additional documentation
 -}
 module Suck (runSuck) where
 
@@ -74,7 +75,7 @@ getFreqs pm = freqs (keys pm) where
 interProcessed :: [((String,String), [(Int,String)])] -> [((String,String), [(Int,Int)])] --takes in the result from getFreqs and associates the words in the frequency list with the index of the corresponding pair in the soon to be built array
 interProcessed ls = newMap grabIndex ls where
     grabIndex ((a,b), corr) = ((a,b), changeCorr corr b)
-    keyList = newMap fst ls --make a temporary map so we can quickly grab the index of a given (x,y) pair
+    keyList = newMap fst ls --grab the (x,y) pairs from ls and turn it into a list to be turned into a map (in the next line)
     keyMap = fromList (zip keyList [0..]) --map of (x,y) word pairs to index
     changeCorr [] _ = []
     changeCorr ((num,word):xs) match = (num, keyMap ! (match,word)):changeCorr xs match --find the index in the dictionary
