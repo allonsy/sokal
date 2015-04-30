@@ -6,19 +6,20 @@ Clone the repository
 You will need the Network.HTTP and Text.HTML.TagSoup packages so make sure that you build from a cabal sandbox with these packages installed or have these packages globally installed.
 
 run 
-* cabal configure
-* cabal build
+* `cabal configure`
+* `cabal build`
 
 the executable will default to the dist/build/sokal directory so if you want the executable anywhere else go ahead and move it
 
 Alternatively, you can just run
-* ghc spew.hs
+* `ghc spew.hs`
+
 preferably with -O2 or -O3 to save a few seconds
 make sure to have the Suck.hs file in the same directory as spew.hs so it compiles
 
 ##Executing instructions
 to execute, run:
-* ./sokal urlfile numwords(int) [outputfile]
+* `./sokal urlfile numwords(int) [outputfile]`
 
 where urlfile is the location to the url file
 numwords is apporximately how many words you want in the final output (it will print until it reaches the specified number of words and then continue until that sentence is finished)
