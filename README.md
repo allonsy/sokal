@@ -1,5 +1,7 @@
 # sokal
-a markov model based random text generator by Alec Snyder
+* a markov model based random text generator by Alec Snyder
+* alsnyder@uchicago.edu
+
 
 ##Build instructions:
 Clone the repository
@@ -30,3 +32,4 @@ sokal defaults to printing to standard out however, you can pipe the sokal text 
 * Note that the articles were encoded with unicode which sometimes annoys my largely ascii expecting program
 * Additionally, if you run the program all the way through, please allow about a minute to run the program (based on the sheer volume of words: almost a million words in all 89 articles)
 If you skip ahead to saving the sokal.model file and reading it in spew (skipping suck), the model will run in a matter of seconds
+* If you are attempting this with a computer with a non-reliable internet connection, the HTTP package may fail, just go ahead and run it again or on the CSIL machines if trouble persists
