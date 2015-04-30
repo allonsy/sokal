@@ -3,6 +3,7 @@
 - Sokal text generator
 - suck.hs
 - See README.md for instructions and additional documentation
+- Github at: https://github.com/allonsy/sokal
 -}
 module Suck (runSuck) where
 

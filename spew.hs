@@ -1,6 +1,7 @@
 {- Alec Snyder 
 Spew Program
 See README.md for instructions and additional documentation
+github at https://github.com/allonsy/sokal
 
 Note: I know that this can be accomplished using the state monad directly,
 which is in fact what I do here, passing around the random state is my classic verbose style
