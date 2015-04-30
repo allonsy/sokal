@@ -11,19 +11,18 @@ import Text.HTML.TagSoup
 import Control.Monad
 import Text.StringLike hiding (empty)
 import Data.Char
-import Data.Map.Lazy hiding (findIndex)
+import Data.Map.Strict hiding (findIndex)
 import Data.List hiding (insert)
 
 type PrimitiveModel = Map (String,String) [String]
 
 type ProcessedModel = [(String, [(Int,Int)])]
 
-runSuck :: IO ()
-runSuck = do
-    contents <- readFile "urls.txt"
+runSuck :: String -> IO ()
+runSuck file= do
+    contents <- readFile file
     putStrLn "Successfully read in url file"
     let ls = lines contents
-    putStrLn $ head ls
     putStrLn "Connecting to servers and downloading content..."
     responses <- mapM grabResp ls
     putStrLn "Parsing in DOM..."
@@ -33,8 +32,10 @@ runSuck = do
     putStrLn "Generating Models"
     let tempy = generatePrim process empty
     let final = primToProcess tempy
-    putStrLn $ show $ final !! 0
-   
+    putStrLn "Printing Model to File"
+    let addNewLine w = (show w) ++ "\n"
+    writeFile "sokal.model" (concatMap (addNewLine) final)
+    --mapM_ ((appendFile "sokal.model") . show) final
 
 grabResp :: String -> IO String
 grabResp str = do 
@@ -42,14 +43,7 @@ grabResp str = do
     getResponseBody makeRequest
 
 processWords :: [[String]] -> [String]
-processWords ls = newFilter isWord (words (concat ((newMap (newFilter (/='\n')) (newMap concat ls)))))
-
-
-isWord :: String -> Bool
-isWord [] = False
-isWord (x:xs)
-    | isAlphaNum x = True
-    | otherwise = isWord xs
+processWords ls = newMap ((newMap toLower) . (newFilter isPrint)) $ (words (concat (((newMap ((newFilter (/='\n')) . concat) ls)))))
 
 extractP :: StringLike str => [Tag str] -> Bool -> [Tag str]
 extractP [] _ = []
@@ -92,10 +86,13 @@ interProcessed :: [((String,String), [(Int,String)])] -> [((String,String), [(In
 interProcessed ls = newMap grabIndex ls where
     grabIndex ((a,b), corr) = ((a,b), changeCorr corr b)
     changeCorr [] _ = []
-    changeCorr ((num,word):xs) match = case findIndex (findMatch (match,word)) ls of
+    changeCorr ((num,word):xs) match = (num, keyMap ! (match,word)):changeCorr xs match
+    {- changeCorr ((num,word):xs) match = case findIndex (findMatch (match,word)) ls of
         Just pos -> (num,pos):changeCorr xs match
-        Nothing -> changeCorr xs match
+        Nothing -> changeCorr xs match -}
     findMatch targ check = fst check == targ
+    keyList = newMap fst ls
+    keyMap = fromList (zip keyList [0..])
 
 processModel :: [((String,String), [(Int,Int)])] -> ProcessedModel
 processModel xs = newMap remFirst xs where

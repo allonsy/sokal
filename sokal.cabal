@@ -16,9 +16,10 @@ extra-source-files:  README.md
 cabal-version:       >=1.10
 
 executable sokal
-  main-is:             suck.hs
+  main-is:             spew.hs
+  ghc-options:		-O3
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base,HTTP,tagsoup,containers
+  build-depends:       base,HTTP,tagsoup,containers,random,array
   -- hs-source-dirs:      
   default-language:    Haskell2010
