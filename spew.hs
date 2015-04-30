@@ -5,6 +5,7 @@ github at https://github.com/allonsy/sokal
 
 Note: I know that this can be accomplished using the state monad directly,
 which is in fact what I do here, passing around the random state is my classic verbose style
+Essentially, a lot of my return types are (Int, StdGen) which conviently is 'State StdGen Int'
 -}
 
 import Suck
