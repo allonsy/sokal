@@ -66,9 +66,9 @@ generatePrim (x:y:z:xs) pm
     | otherwise = generatePrim (y:z:xs) (insert (x,y) [z] pm) --otherwise, add this to the dictionary
 
 getFreqs :: PrimitiveModel -> [((String,String), [(Int,String)])] --It takes in a primitive model and it looks at the list of words following this pair and creates a list of (occurrences of this word, word itself) tuples
-getFreqs pm = freqs (keys pm) where
+getFreqs pm = freqs (toList pm) where --turn the map into a list
     freqs [] = []
-    freqs (x:xs) = (x,countOcc (pm ! x) (nub (pm ! x))) : freqs xs --iterate over the nubbed list but count occurrences in the original list
+    freqs ((strs,assocs):xs) = (strs,countOcc assocs (nub assocs)) : freqs xs --iterate over the nubbed list but count occurrences in the original list
     countOcc _ [] =[]
     countOcc orig (x:xs) = ((length (elemIndices x orig)),x) : countOcc orig xs --traverse the list and see how many we have of each item
 
